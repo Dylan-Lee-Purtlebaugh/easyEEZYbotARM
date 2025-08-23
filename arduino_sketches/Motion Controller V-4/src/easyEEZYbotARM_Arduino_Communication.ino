@@ -36,7 +36,12 @@
 #include <Arduino.h>
 // include this library for servo easing functionality
 #include "ServoEasing.hpp"
-#include <Servo.h>
+#include <Wire.h>
+#include <ServoEasing.hpp>
+#include <ServoEasingPCA9685.hpp>  // Make sure this is included
+
+
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   Definitions                                                                    *
@@ -85,10 +90,12 @@ float last_servoAngle_EE = floatFromPC0;
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   Instatiate clasess for libraries                                               *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-ServoEasing Servo1(PCA9685_DEFAULT_ADDRESS, &Wire);
-ServoEasing Servo2(PCA9685_DEFAULT_ADDRESS, &Wire);
-ServoEasing Servo3(PCA9685_DEFAULT_ADDRESS, &Wire);
-ServoEasing Servo0(PCA9685_DEFAULT_ADDRESS, &Wire);
+
+ServoEasingPCA9685 Servo1;
+ServoEasingPCA9685 Servo2;
+ServoEasingPCA9685 Servo3;
+ServoEasingPCA9685 Servo0;
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   START OF PROGRAM (Setup)                                                       *
@@ -96,6 +103,20 @@ ServoEasing Servo0(PCA9685_DEFAULT_ADDRESS, &Wire);
 
 void setup()
 {
+
+    Servo1.setI2CWire(&Wire);
+    Servo1.begin(PCA9685_DEFAULT_ADDRESS);
+
+    Servo2.setI2CWire(&Wire);
+    Servo2.begin(PCA9685_DEFAULT_ADDRESS);
+
+    Servo3.setI2CWire(&Wire);
+    Servo3.begin(PCA9685_DEFAULT_ADDRESS);
+
+    Servo0.setI2CWire(&Wire);
+    Servo0.begin(PCA9685_DEFAULT_ADDRESS);
+
+
   // flash LED so we know we are alive
   blinkLED();
 
