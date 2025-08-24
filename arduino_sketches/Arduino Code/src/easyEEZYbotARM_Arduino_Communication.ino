@@ -36,6 +36,12 @@
 #include <Arduino.h>
 // include this library for servo easing functionality
 #include "ServoEasing.hpp"
+#include <Wire.h>
+#include <ServoEasing.hpp>
+//#include <ServoEasingPCA9685.hpp>  // Make sure this is included
+
+
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   Definitions                                                                    *
@@ -44,10 +50,10 @@
 #define VERSION "3.1"
 #define BUZZER_PIN 5 // buzzer to featherwing pin 5, 470 ohm resistor
 #define ACTION_TIME_PERIOD 1000
-const int SERVO1_PIN = 1; // servo pin for joint 1
-const int SERVO2_PIN = 2; // servo pin for joint 2
-const int SERVO3_PIN = 3; // servo pin for joint 3
-const int SERVO0_PIN = 0; // servo pin for end effector
+const int SERVO1_PIN = 4; // servo pin for joint 1
+const int SERVO2_PIN = 6; // servo pin for joint 2
+const int SERVO3_PIN = 5; // servo pin for joint 3
+const int SERVO0_PIN = 8; // servo pin for end effector
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   Variables                                                                      *
@@ -84,10 +90,12 @@ float last_servoAngle_EE = floatFromPC0;
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   Instatiate clasess for libraries                                               *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-ServoEasing Servo1(PCA9685_DEFAULT_ADDRESS, &Wire);
-ServoEasing Servo2(PCA9685_DEFAULT_ADDRESS, &Wire);
-ServoEasing Servo3(PCA9685_DEFAULT_ADDRESS, &Wire);
-ServoEasing Servo0(PCA9685_DEFAULT_ADDRESS, &Wire);
+
+ServoEasing Servo1;
+ServoEasing Servo2;
+ServoEasing Servo3;
+ServoEasing Servo0;
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   START OF PROGRAM (Setup)                                                       *
@@ -95,6 +103,15 @@ ServoEasing Servo0(PCA9685_DEFAULT_ADDRESS, &Wire);
 
 void setup()
 {
+/*
+    Servo1.attach(SERVO1_PIN);
+    Servo2.attach(SERVO2_PIN); // this is probably what causes robot to crash at power up
+    Servo3.attach(SERVO3_PIN);
+    Servo0.attach(SERVO0_PIN);
+
+
+  */
+
   // flash LED so we know we are alive
   blinkLED();
 
