@@ -26,7 +26,7 @@ from easyEEZYbotARM.kinematic_model import EEZYbotARM_Mk2
 from easyEEZYbotARM.serial_communication import arduinoController
 
 # Insert your Arduino serial port here to initialise the arduino controller
-myArduino = arduinoController(port="COM3")
+myArduino = arduinoController(port="COM4")
 myArduino.openSerialPort()
 
 # Initialise kinematic model with initial joint angles (home position)
