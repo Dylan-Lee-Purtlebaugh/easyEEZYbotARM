@@ -53,7 +53,7 @@ class arduinoController:
 
     # Initializer / Instance attributes
 
-    def __init__(self, port="COM18"):
+    def __init__(self, port="/dev/ttyUSB0"):
         self.port = port
 
     # Include function here connect and pass joint angle
