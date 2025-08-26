@@ -27,9 +27,9 @@ def get_xyz_input():
 
 # Assign cartesian position where we want the robot arm end effector to move to
 # (x,y,z in mm from centre of robot base)
-x = 0  # mm
-y = 0  # mm
-z = 13  # mm
+coords = get_xyz_input()
+if coords:
+    x, y, z = coords
 
 # Compute inverse kinematics
 a1, a2, a3 = myRobotArm.inverseKinematics(x, y, z)
