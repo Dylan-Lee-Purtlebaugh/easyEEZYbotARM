@@ -22,21 +22,25 @@ def get_xyz_input():
 
 
 
+def move_to_xyz(x, y, z):
+    try:
+        a1, a2, a3 = myRobotArm.inverseKinematics(x, y, z)
+        print(f"Moving to ({x}, {y}, {z}) → q1={a1:.2f}, q2={a2:.2f}, q3={a3:.2f}")
+        myRobotArm.updateJointAngles(q1=a1, q2=a2, q3=a3)
+        myRobotArm.plot()
+    except Exception as e:
+        print(f"IK failed: {e}")
 
-#___________________________________________________________________
 
-# Assign cartesian position where we want the robot arm end effector to move to
-# (x,y,z in mm from centre of robot base)
-coords = get_xyz_input()
-if coords:
-    x, y, z = coords
+while True:
+    coords = get_xyz_input()
+    if coords:
+        x, y, z = coords
+        move_to_xyz(x, y, z)
+        
+        raw_input = input("Enter coordinates as X,Y,Z (mm) or type 'exit': ")
+if raw_input.lower() == 'exit':
+    break
 
-# Compute inverse kinematics
-a1, a2, a3 = myRobotArm.inverseKinematics(x, y, z)
+        
 
-# Print the result
-print('To move the end effector to the cartesian position (mm) x={}, y={}, z={}, the robot arm joint angles (degrees)  are q1 = {}, q2= {}, q3 = {}'.format(x, y, z, a1, a2, a3))
-
-# Visualise the new joint angles
-myRobotArm.updateJointAngles(q1=a1, q2=a2, q3=a3)
-myRobotArm.plot()
