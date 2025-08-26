@@ -5,22 +5,19 @@ from easyEEZYbotARM.kinematic_model import EEZYbotARM_Mk2
 myRobotArm = EEZYbotARM_Mk2(initial_q1=0, initial_q2=70, initial_q3=-100)
 myRobotArm.plot()  # plot it
 
-#                       injection
 #_____________________________________________________________________
 
-
 def get_xyz_input():
+    raw_input = input("Enter coordinates as X,Y,Z (mm) or type 'exit': ")
+    if raw_input.lower() == 'exit':
+        return 'exit'
     try:
-        raw_input = input("Enter coordinates as X,Y,Z (mm): ")
         x_str, y_str, z_str = raw_input.strip().split(',')
         x, y, z = float(x_str), float(y_str), float(z_str)
         return x, y, z
     except ValueError:
         print("Invalid input. Please enter three numbers separated by commas.")
         return None
-
-
-
 
 def move_to_xyz(x, y, z):
     try:
@@ -31,16 +28,13 @@ def move_to_xyz(x, y, z):
     except Exception as e:
         print(f"IK failed: {e}")
 
+#_____________________________________________________________________
 
 while True:
     coords = get_xyz_input()
-    if coords:
+    if coords == 'exit':
+        print("Exiting control loop.")
+        break
+    elif coords:
         x, y, z = coords
         move_to_xyz(x, y, z)
-        
-        raw_input = input("Enter coordinates as X,Y,Z (mm) or type 'exit': ")
-if raw_input.lower() == 'exit':
-    break
-
-        
-
