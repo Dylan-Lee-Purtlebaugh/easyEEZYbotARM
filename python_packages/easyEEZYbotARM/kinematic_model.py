@@ -1103,7 +1103,7 @@ class EEZYbotARM_Mk2(EEZYbotARM):
     # Joint limits
     q1_min = -30  # degrees
     q1_max = 30
-    q2_min = 39
+    q2_min = 10
     q2_max = 120
     # q3_min, q3_max are given by q3CalcLimits() function
 
